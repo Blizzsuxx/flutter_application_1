@@ -5,6 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Store with ChangeNotifier {
+  // Store class
+  // Contains exchange rates, loading status, and favourites
+  // Fetches exchange rates from fixer.io API
+  // Converts currency
+  // Adds or removes currency from favourites
   static const String _baseUrl = 'http://data.fixer.io/api/latest';
   static const String _accessKey = '6b1d4212f150a4236276e4c28fa188aa';
   static const String _url = '$_baseUrl?access_key=$_accessKey';
@@ -23,12 +28,15 @@ class Store with ChangeNotifier {
   }
 
   void initSharedPreferences() async {
+    // Initialize shared preferences
     _prefs = await SharedPreferences.getInstance();
     favourites = _prefs?.getStringList('favourites')?.toSet() ?? {};
     notifyListeners();
   }
 
   Future<void> initExchangeRates() async {
+    // Fetch exchange rates from fixer.io API
+
     _isLoading = true;
     notifyListeners();
 
@@ -46,6 +54,7 @@ class Store with ChangeNotifier {
   }
 
   num convertCurrency(String from, String to, num amount) {
+    // Convert currency
     final num fromRate = _exchangeRates[from];
     final num toRate = _exchangeRates[to];
 
@@ -55,6 +64,7 @@ class Store with ChangeNotifier {
   }
 
   void addOrRemoveFavourite(String currency) {
+    // Add or remove a currency from favourites
     if (favourites.contains(currency)) {
       favourites.remove(currency);
     } else {

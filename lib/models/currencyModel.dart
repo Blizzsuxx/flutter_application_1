@@ -1,6 +1,8 @@
 import 'package:flutter_application_1/constants/countriesAndCurrencies.dart';
 
 class CurrencyModel {
+  // Currency model class
+  // Contains currency, symbol, and flag
   CurrencyModel({
     required this.currency,
     required this.symbol,

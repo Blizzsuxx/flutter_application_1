@@ -7,6 +7,8 @@ import 'package:flutter_application_1/providers/store.dart';
 import 'package:provider/provider.dart';
 
 class CurrencyConverter extends StatefulWidget {
+  // Currency converter page
+  // Contains two currency widgets and a swap button
   const CurrencyConverter({super.key});
 
   @override
@@ -22,12 +24,8 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   CurrencyModel selectedCurrency2 = CurrencyModel.fromCurrency("EUR");
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // gets and listens to the store provider
     final Store fixer = Provider.of<Store>(context);
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +34,8 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
       body: Container(
         color: Colors.lightBlue[100],
         child: fixer.isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(
+                child: CircularProgressIndicator()) // show loading spinner
             : _buildBody(fixer),
       ),
     );
@@ -81,6 +80,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   }
 
   void swapCurrencies() {
+    // swap the selected currencies
     setState(() {
       final CurrencyModel tempCurrency = selectedCurrency1;
       selectedCurrency1 = selectedCurrency2;
@@ -91,6 +91,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   }
 
   void calculateCurrencies1(num amount) {
+    // calculate the amount for the first currency
     final Store fixer = Provider.of<Store>(context, listen: false);
     setState(() {
       amountController2.text = fixer
@@ -101,6 +102,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   }
 
   void calculateCurrencies2(num amount) {
+    // calculate the amount for the second currency
     final Store fixer = Provider.of<Store>(context, listen: false);
     setState(() {
       amountController1.text = fixer
@@ -111,6 +113,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   }
 
   void currencyChanged1(CurrencyModel value) {
+    // change the first currency
     setState(() {
       selectedCurrency1 = value;
       final num amount = double.tryParse(amountController1.text) ?? 0;
@@ -119,6 +122,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   }
 
   void currencyChanged2(CurrencyModel value) {
+    // change the second currency
     setState(() {
       selectedCurrency2 = value;
       final num amount = double.tryParse(amountController2.text) ?? 0;
@@ -127,6 +131,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   }
 
   void favouriteChanged(CurrencyModel currency) {
+    // add or remove a currency from the favourites
     final Store fixer = Provider.of<Store>(context, listen: false);
     fixer.addOrRemoveFavourite(currency.currency);
   }

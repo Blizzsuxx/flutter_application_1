@@ -4,6 +4,9 @@ import 'package:flutter_application_1/constants/countriesAndCurrencies.dart';
 import 'package:flutter_application_1/models/currencyModel.dart';
 import 'package:flutter_svg/svg.dart';
 
+// reusable widget for currency selection
+// enables user to select a currency from a dropdown list and enter an amount to convert
+// emits events when currency or amount changes, and when a currency is added or removed from favourites
 class CurrencyWidget extends StatelessWidget {
   const CurrencyWidget(
       {super.key,
@@ -99,6 +102,7 @@ class CurrencyWidget extends StatelessWidget {
   }
 
   Widget buildItem(BuildContext context, CurrencyModel item, bool isSelected) {
+    // defines how each currency is displayed in the dropdown
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
@@ -115,6 +119,7 @@ class CurrencyWidget extends StatelessWidget {
   }
 
   Widget buildDropdown(BuildContext context, CurrencyModel? data) {
+    // defines how the selected currency is displayed in the dropdown
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
@@ -138,12 +143,14 @@ class CurrencyWidget extends StatelessWidget {
   }
 
   List<CurrencyModel> filterFavouriteCurrencies(List<CurrencyModel> items) {
+    // filters the list of currencies to only show the favourites
     return items.where((CurrencyModel item) {
       return favourites.contains(item.currency);
     }).toList();
   }
 
   void addToFavourites() {
+    // adds or removes the selected currency from the favourites
     onFavouriteChanged(selectedCurrency);
   }
 }

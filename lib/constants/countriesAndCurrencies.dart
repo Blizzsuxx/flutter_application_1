@@ -1,3 +1,5 @@
+// mapper for currencies to countries and symbols
+// important for displaying the correct currency symbol and country flag
 const Map<String, dynamic> currencies = {
   "AED": {
     "flag": "aed.svg",
